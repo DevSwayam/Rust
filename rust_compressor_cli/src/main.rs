@@ -36,8 +36,20 @@ fn main() {
         }
     };
 
+    /*
+        Compression Levels in GzEncoder
+    The compression level determines the trade-off between speed and compression ratio:
+
+    Compression::fast(): Minimal compression but faster processing.
+    Compression::default(): Balanced compression and speed (default level).
+    Compression::best(): Maximum compression but slower processing.
+    The choice depends on the use case:
+
+    Use fast() for quick results when size reduction isn't critical.
+    Use best() for maximum size reduction, especially for large files.
+     */
     // Initialize the GzEncoder with default compression level
-    let mut encoder = GzEncoder::new(target, Compression::default());
+    let mut encoder = GzEncoder::new(target, Compression::best());
 
     // Record the start time of the compression process
     let start_time = Instant::now();
@@ -84,6 +96,9 @@ fn main() {
     if compressed_size >= source_size {
         println!("Warning: The compressed file is larger than the source file.");
     } else {
-        println!("Compression ratio: {:.2}%", (compressed_size as f64 / source_size as f64) * 100.0);
+        println!(
+            "Compression ratio: {:.2}%",
+            (compressed_size as f64 / source_size as f64) * 100.0
+        );
     }
 }
